@@ -3,7 +3,10 @@
    'name' => false,
    'id' => false,
    'label' => true,
+   'model' => false,
+   'error' => false
 ])
+<div class="flex w-full flex-col">
 
 {{--Label--}}
 @if ($label !== false)
@@ -11,13 +14,23 @@
            for="{{$id}}"
            @endif
 
-           class="block text-sm font-medium text-neutral-600"> {{$title}}
+           class="block text-sm mb-1 font-medium text-neutral-600 dark:text-gray-300">
+
+        <div class="flex">
+
+            {{$title}}
+
+            @if ($error)
+                <p> :<span class="text-xs text-red-700 dark:text-red-500"> {{$error}}</span></p>
+            @endif
+        </div>
 
     </label>
 @endif
 {{--End Label--}}
 
 <select
+    wire:model="{{$model}}"
     {{$attributes->merge(['class' =>'
                           form-select
                           w-full
@@ -55,3 +68,4 @@
     {{$options}}
 
 </select>
+</div>

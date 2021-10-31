@@ -1,6 +1,11 @@
 <?php
 
-use App\Http\Controllers\Proximity\Auth\RegisterController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Proximity\Auth\LoginController;
+use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Subject\SubjectController;
+use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +19,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('prox-homepage');
+Route::get('/Prox-UI', function () {
+    return view('Prøxïmïtÿ.PrøxïmïtyUI');
+})->name('PrøxïmïtyUI');
 
-Route::get('/login', function () {
-    return view('Prøxïmïtÿ.Auth.login');
-})->name('prox-login');
 
-Route::get('/register',[RegisterController::class,'index'])->name('prox-register');
+Route::get('/login',[LoginController::class,'index'])->name('prox-login');
 
-Route::post('/on-register',[RegisterController::class,'store'])->name('prox-on-register');
+Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+Route::get('/student',[StudentController::class,'index'])->name('student');
+Route::get('/student-choice',[StudentController::class,'studentChoice'])->name('student-choice');
+Route::get('/subject',[SubjectController::class,'index'])->name('subject');
+Route::get('/payment',[PaymentController::class,'index'])->name('payment');
+Route::get('/teacher',[TeacherController::class,'index'])->name('teacher');
