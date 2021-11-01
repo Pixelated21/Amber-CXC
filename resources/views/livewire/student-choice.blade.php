@@ -7,7 +7,7 @@
             <div class="flex items-center justify-between">
                 <div class=" w-36">
                     <a class="text-2xl font-bold duration-300 text-gray-800 dark:text-white lg:text-2xl hover:text-gray-700 dark:hover:text-gray-300"
-                       href="#">Amber-CXC</a>
+                       href="{{route('dashboard')}}">Amber-CXC</a>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -87,6 +87,9 @@
                                                         <x-select-options
                                                             :selected="true"
                                                             title="Select Student"/>
+
+                                                        <x-select-options :value="$student->id"
+                                                                          :title="('Name: '.$student->first_nm.' '.$student->last_nm.' - '.'Email: '.$student->email_addr)"/>
                                                     @else
                                                         <x-select-options :value="$student->id"
                                                                           :title="('Name: '.$student->first_nm.' '.$student->last_nm.' - '.'Email: '.$student->email_addr)"/>
@@ -107,6 +110,9 @@
                                                         <x-select-options
                                                             :selected="true"
                                                             title="Select Subject"/>
+
+                                                        <x-select-options :value="$subject->id"
+                                                                          :title="$subject->subject_nm"/>
                                                     @else
                                                         <x-select-options :value="$subject->id"
                                                                           :title="$subject->subject_nm"/>
@@ -133,7 +139,7 @@
                                 </x-slot>
 
                                 <x-slot name="button">
-                                    <x-modal-button alphName="modal3" cancel="Cancel" action="Add Student Choice"/>
+                                    <x-modal-button loading="addStudentChoice" alphName="modal3" cancel="Cancel" action="Add Student Choice"/>
                                 </x-slot>
 
 
@@ -142,7 +148,14 @@
 
 
                     </div>
-
+                    <form action="{{route('logout')}}" method="post">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="bg-white shadow-md duration-300 dark:hover:bg-red-700 hover:bg-red-600 px-2 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-700 dark:hover:bg-gray-200 hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-200 md:mx-2">
+                            Logout
+                        </button>
+                    </form>
 
                 </div>
             </div>
@@ -252,7 +265,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <td colspan="5" class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">
+                            <td colspan="7" class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">
                                 <p class="text-gray-900 text-center font-semibold text-2xl whitespace-no-wrap">
                                     No Data Available
                                 </p>

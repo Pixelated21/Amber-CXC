@@ -17,7 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete()->cascadeOnUpdate();
             $table->float('amount_due');
-            $table->float('amount_paid');
+            $table->float('amount_paid')->default(0);
             $table->float('balance_amt');
             $table->year('year_of_exam');
             $table->timestamps();

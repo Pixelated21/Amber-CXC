@@ -53,7 +53,7 @@
                 "> Manage all your students easily with Amber-CXC </p>
                         <div class="flex justify-center w-full max-w-2xl gap-2 mx-auto mt-6">
                             <div class="mt-3 rounded-lg sm:mt-0">
-                                <a href="#" class="
+                                <a href="{{route('teacher')}}" class="
 
                       items-center
                       block

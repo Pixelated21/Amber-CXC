@@ -13,8 +13,11 @@ class Subject extends Component
 
     public $search;
 
+    public $toast;
+
     public $subjectName;
     public $costAmt;
+
 
     protected $rules = [
       'subjectName' => 'required|min:2'  ,
@@ -45,6 +48,11 @@ class Subject extends Component
            'subject_nm' => $this->subjectName,
             'cost_amt' => $this->costAmt,
         ]);
+
+//        $this->emit('toast');
+        $this->toast = true;
+
+        sleep(1);
 
         $this->subjectName = '';
         $this->costAmt = '';

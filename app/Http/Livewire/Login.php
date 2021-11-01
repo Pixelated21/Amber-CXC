@@ -28,24 +28,40 @@ class Login extends Component
             'password' => 'required'
         ]);
 
+
         if (!Auth::attempt($login)) {
 
-
+//            dd(Auth::id());
 
             $this->email = '';
             $this->password = '';
 
             sleep(2);
 
-            session()->flash('type', 0);
             session()->flash('alert', 'Credentials Invalid');
 
-            return;
+        } else {
+
+//            dd(Auth::id());
+
+            if (Auth::user()->status === 3) {
+                session()->flash('alert', 'Account Pending Admin Review');
+            } elseif (Auth::user()->status === 0) {
+                session()->flash('alert', 'Account Rejected');
+            } else {
+                sleep(1);
+
+                if (Auth::user()->role_id === 2) {
+                    return redirect()->route('teacher-dashboard');
+                }
+
+                if (Auth::user()->role_id === 1) {
+                    return redirect()->route('dashboard');
+                }
+
+            }
+
         }
-
-        sleep(3);
-
-        return redirect()->route('PrøxïmïtyUI');
 
 
     }

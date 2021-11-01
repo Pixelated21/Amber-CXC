@@ -18,7 +18,7 @@ class Student extends Component
     public $lastName;
     public $class;
     public $date;
-    public $phoneNumber;
+    public $phone_nbr;
     public $gender;
     public $email_addr;
 
@@ -27,7 +27,7 @@ class Student extends Component
         'lastName' => 'required|min:2',
         'class' => 'required|min:2',
         'date' => 'required|min:2',
-        'phoneNumber' => 'required|min:2|unique:students',
+        'phone_nbr' => 'required|min:2|unique:students',
         'gender' => 'required|min:2',
         'email_addr' => 'required|min:2|email|unique:students',
     ];
@@ -67,9 +67,9 @@ class Student extends Component
             'lastName' => 'required|min:2',
             'class' => 'required|min:2',
             'date' => 'required|min:2',
-            'phoneNumber' => 'required|min:2',
+            'phone_nbr' => 'required|min:2',
             'gender' => 'required|min:2',
-            'email' => 'required|min:2|email',
+            'email_addr' => 'required|min:2|email',
         ]);
 
         \App\Models\Student::create([
@@ -77,18 +77,21 @@ class Student extends Component
             'last_nm' => $this->lastName,
             'dob' => $this->date,
             'class' => $this->class,
-            'phone_nbr' => $this->phoneNumber,
-            'email_addr' => $this->email,
+            'phone_nbr' => $this->phone_nbr,
+            'email_addr' => $this->email_addr,
             'gender' => $this->gender
 
         ]);
+
+        sleep(1);
+
 
         $this->firstName = '';
         $this->lastName = '';
         $this->date = '';
         $this->class = '';
-        $this->phoneNumber = '';
-        $this->email = '';
+        $this->phone_nbr = '';
+        $this->email_addr = '';
         $this->gender = '';
 
 

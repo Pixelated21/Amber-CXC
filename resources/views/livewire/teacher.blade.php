@@ -7,7 +7,7 @@
             <div class="flex items-center justify-between">
                 <div class=" w-36">
                     <a class="text-2xl font-bold duration-300 text-gray-800 dark:text-white lg:text-2xl hover:text-gray-700 dark:hover:text-gray-300"
-                       href="#">Amber-CXC</a>
+                       href="{{route('dashboard')}}">Amber-CXC</a>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -64,56 +64,63 @@
                             placeholder="Search">
                     </div>
 
-                    <div x-data="{modal10: false}">
+                    <div x-data="{modal14: false}">
 
-                        <button @click="modal10 = !modal10"
+                        <button @click="modal14 = !modal14"
                                 class="bg-white shadow-md duration-300 dark:hover:bg-orange-500 hover:bg-orange-500 px-2 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-700 dark:hover:bg-gray-200 hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-200 md:mx-2">
                             Add Teacher
                         </button>
 
-                        <form wire:submit.prevent="addStudentChoice">
-                            <x-create-modal alphName="modal10" title="Add Student Choice">
+                        <form wire:submit.prevent="addTeacher">
+                            <x-create-modal alphName="modal14" title="Add Teacher">
 
                                 <x-slot name="content">
 
                                     <div @click.prevent="{{$alphName = false}}" class="space-y-5 gap-10">
 
                                         <div class="md:grid md:grid-cols-3 flex flex-col gap-5 ">
-                                            <x-auth-input model="firstName" :error="$errors->first('firstName')"
+
+                                            <x-auth-input model="first_nm" :error="$errors->first('first_nm')"
                                                           placeholder="First Name" title="First Name"/>
-                                            <x-auth-input model="lastName" :error="$errors->first('lastName')"
+
+                                            <x-auth-input model="last_nm" :error="$errors->first('last_nm')"
                                                           placeholder="Last Name" title="Last Name"/>
-                                            <x-auth-input model="class" :error="$errors->first('class')"
-                                                          placeholder="Class"
-                                                          title="Class"/>
-                                        </div>
 
+                                            <x-auth-select model="subject_id" title="Subject"
+                                                           :error="$errors->first('subject_id')">
 
-                                        <div class="md:grid md:grid-cols-3 flex flex-col gap-5 ">
-
-                                            <x-auth-select model="gender" title="Gender"
-                                                           :error="$errors->first('gender')">
                                                 <x-slot name="options">
-                                                    <x-select-options title="Male"/>
-                                                    <x-select-options title="Female"/>
+                                                    {{--                                                {{dd($subjects)}}--}}
+                                                    @forelse($subjects as $subject)
+                                                        @if ($loop->first)
+                                                            <x-select-options :selected="true" title="Select Subject"/>
+                                                            <x-select-options :value="$subject->id"
+                                                                              :title="$subject->subject_nm"/>
+                                                        @else
+                                                            <x-select-options :value="$subject->id"
+                                                                              :title="$subject->subject_nm"/>
+                                                        @endif
+                                                    @empty
+                                                        <x-select-options title="No Data Available"/>
+                                                    @endforelse
                                                 </x-slot>
+
                                             </x-auth-select>
 
-                                            <x-auth-input model="phoneNumber" :error="$errors->first('phoneNumber')"
-                                                          placeholder="Phone Number" title="Phone Number"/>
-
-                                            <x-auth-input model="date" :error="$errors->first('date')" type="date"
-                                                          title="Date"/>
                                         </div>
 
-                                        <x-auth-input model="email_addr" :error="$errors->first('email_addr')" placeholder="Email"
-                                                      title="Email"/>
+                                        <x-auth-input model="email" :error="$errors->first('email')"
+                                                      placeholder="First Name" title="Email"/>
 
+                                            <x-auth-input-password model="password"
+                                                                   :error="$errors->first('password')"
+                                                                   placeholder="Password"
+                                                                   title="Password"/>
                                     </div>
                                 </x-slot>
 
                                 <x-slot name="button">
-                                    <x-modal-button alphName="modal10" cancel="Cancel" action="Add Student Choice"/>
+                                    <x-modal-button loading="addTeacher" alphName="modal14" cancel="Cancel" action="Add Student Choice"/>
                                 </x-slot>
 
 
@@ -123,6 +130,14 @@
 
                     </div>
 
+                    <form action="{{route('logout')}}" method="post">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="bg-white shadow-md duration-300 dark:hover:bg-red-700 hover:bg-red-600 px-2 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-700 dark:hover:bg-gray-200 hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-200 md:mx-2">
+                            Logout
+                        </button>
+                    </form>
 
                 </div>
             </div>
@@ -151,20 +166,16 @@
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Subject
-                            </th>
-                            <th
-                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Subject Cost
-                            </th>
-                            <th
-                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Status
+                                Email
                             </th>
 
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Year Of Exam
+                                Subject
+                            </th>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Status
                             </th>
                             <th
                                 class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -174,74 +185,78 @@
                         </thead>
                         <tbody>
 
-                        {{--                        {{dd($studentChoices)}}--}}
-{{--                        @forelse($studentChoices as $choice)--}}
-{{--                            <tr>--}}
-{{--                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">--}}
-{{--                                    <div class="ml-3">--}}
-{{--                                        <p class="text-gray-900 font-medium whitespace-no-wrap">--}}
-{{--                                            {{$choice->student->first_nm}}--}}
-{{--                                        </p>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">--}}
-{{--                                    <p class="text-gray-900 font-medium whitespace-no-wrap">{{$choice->student->last_nm}}</p>--}}
-{{--                                </td>--}}
-{{--                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">--}}
-{{--                                    <p class="text-gray-900 font-medium whitespace-no-wrap">--}}
-{{--                                        {{$choice->subject->subject_nm}}--}}
-{{--                                    </p>--}}
-{{--                                </td>--}}
-{{--                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">--}}
-{{--                                    <p class="text-gray-900 font-medium whitespace-no-wrap">--}}
-{{--                                        $ {{number_format($choice->subject->cost_amt,2)}}--}}
-{{--                                    </p>--}}
-{{--                                </td>--}}
-{{--                                <td class="px-5 py-5 border-b  border-gray-200 bg-white text-center text-sm">--}}
-{{--                                    <p class="text-white font-medium font-semibold @if($choice->status === 1) bg-green-500 @elseif($choice->status === 0) bg-red-500 @elseif($choice->status === 3) bg-yellow-300 text-black animate-pulse @endif rounded py-2 text-center whitespace-no-wrap">--}}
-{{--                                        @if($choice->status === 1) Accepted @elseif($choice->status === 0)--}}
-{{--                                            Rejected @elseif($choice->status === 3) Pending @endif--}}
-{{--                                    </p>--}}
-{{--                                </td>--}}
-{{--                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">--}}
-{{--                                    <p class="text-gray-900 font-medium whitespace-no-wrap">--}}
-{{--                                        {{$choice->year_of_exam}}--}}
-{{--                                    </p>--}}
-{{--                                </td>--}}
+                        @forelse($teachers as $teacher)
+{{--                            {{$teacher->subject}}--}}
+                            <tr>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">
+                                    <div class="ml-3">
+                                        <p class="text-gray-900 font-medium whitespace-no-wrap">
+                                            {{$teacher->first_nm}}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">
+                                    <div class="ml-3">
+                                        <p class="text-gray-900 font-medium whitespace-no-wrap">
+                                            {{$teacher->last_nm}}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">
+                                    <div class="ml-3">
+                                        <p class="text-gray-900 font-medium whitespace-no-wrap">
+                                            {{$teacher->user->email}}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">
+                                    <div class="ml-3">
+                                        <p class="text-gray-900 font-medium whitespace-no-wrap">
+                                            {{$teacher->subject->subject_nm}}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-5 border-b  border-gray-200 bg-white text-center text-sm">
+                                    <p class="text-white font-medium font-semibold @if($teacher->user->status === 1) bg-green-500 @elseif($teacher->user->status === 0) bg-red-500 @elseif($teacher->user->status === 3) bg-yellow-300 text-black animate-pulse @endif rounded py-2 text-center whitespace-no-wrap">
+                                        @if($teacher->user->status === 1) Authorized @elseif($teacher->user->status === 0)
+                                            Rejected @elseif($teacher->user->status === 3) Pending @endif
+                                    </p>
+                                </td>
 
-{{--                                <td class="px-5  py-5 border-b border-gray-200 bg-white text-center text-sm">--}}
+                                <td class="px-5  py-5 border-b border-gray-200 bg-white text-center text-sm">
 
-{{--                                    @if ($choice->status !== 3)--}}
-{{--                                        <button disabled--}}
-{{--                                                class="bg-gray-400 opacity-50 cursor-not-allowed duration-300 shadow-sm hover:shadow-md px-4 py-2 font-medium text-white rounded-md whitespace-no-wrap">--}}
-{{--                                            Actions Unavailable--}}
-{{--                                        </button>--}}
-{{--                                    @else--}}
-{{--                                        <div class="gap-2 flex justify-center">--}}
-{{--                                            <button wire:click="acceptStudent({{$choice}})"--}}
-{{--                                                    class=" bg-green-400 duration-300 shadow-sm hover:shadow-md px-4 py-2 font-medium text-white rounded-md whitespace-no-wrap">--}}
-{{--                                                Accept--}}
-{{--                                            </button>--}}
-{{--                                            <button wire:click="rejectStudent({{$choice}})"--}}
-{{--                                                    class="bg-red-600 duration-300 shadow-sm hover:shadow-md px-4 py-2 font-medium text-white rounded-md whitespace-no-wrap">--}}
-{{--                                                Reject--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                    @endif--}}
+                                    @if ($teacher->user->status !== 3)
+                                        <button disabled
+                                                class="bg-gray-400 opacity-50 cursor-not-allowed duration-300 shadow-sm hover:shadow-md px-4 py-2 font-medium text-white rounded-md whitespace-no-wrap">
+                                            Actions Unavailable
+                                        </button>
 
-{{--                                </td>--}}
-{{--                            </tr>--}}
-{{--                        @empty--}}
-{{--                            <td colspan="5" class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">--}}
-{{--                                <p class="text-gray-900 text-center font-semibold text-2xl whitespace-no-wrap">--}}
-{{--                                    No Data Available--}}
-{{--                                </p>--}}
-{{--                            </td>--}}
-{{--                        @endforelse--}}
+                                    @else
+                                        <div class="gap-2 flex justify-center">
+                                            <button wire:click="authorizeTeacher({{$teacher}})"
+                                                    class=" bg-green-400 duration-300 shadow-sm hover:shadow-md px-4 py-2 font-medium text-white rounded-md whitespace-no-wrap">
+                                                Authorize
+                                            </button>
+                                            <button wire:click="declineTeacher({{$teacher}})"
+                                                    class="bg-red-600 duration-300 shadow-sm hover:shadow-md px-4 py-2 font-medium text-white rounded-md whitespace-no-wrap">
+                                                Decline
+                                            </button>
+                                        </div>
+                                    @endif
+
+                                </td>
+                            </tr>
+                        @empty
+                            <td colspan="6" class="px-5 py-5 border-b border-gray-200 bg-white text-center text-sm">
+                                <p class="text-gray-900 text-center font-semibold text-2xl whitespace-no-wrap">
+                                    No Data Available
+                                </p>
+                            </td>
+                        @endforelse
                         </tbody>
                     </table>
                 </div>
-{{--                {{$studentChoices->links()}}--}}
+                {{$teachers->links()}}
             </div>
         </div>
     </div>

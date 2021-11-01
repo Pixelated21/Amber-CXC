@@ -82,6 +82,9 @@ class StudentChoice extends Component
             'year_of_exam' => $this->yearOfExam,
         ]);
 
+        sleep(1);
+
+
         $this->subject = '';
         $this->student = '';
         $this->yearOfExam = '';

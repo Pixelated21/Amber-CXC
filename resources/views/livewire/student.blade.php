@@ -7,7 +7,7 @@
             <div class="flex items-center justify-between">
                 <div class=" w-36">
                     <a class="text-2xl font-bold duration-300 text-gray-800 dark:text-white lg:text-2xl hover:text-gray-700 dark:hover:text-gray-300"
-                       href="#">Amber-CXC</a>
+                       href="{{route('dashboard')}}">Amber-CXC</a>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -98,7 +98,7 @@
                                                 </x-slot>
                                             </x-auth-select>
 
-                                            <x-auth-input model="phoneNumber" :error="$errors->first('phoneNumber')"
+                                            <x-auth-input model="phone_nbr" :error="$errors->first('phoneNumber')"
                                                           placeholder="Phone Number" title="Phone Number"/>
 
                                             <x-auth-input model="date" :error="$errors->first('date')" type="date"
@@ -111,7 +111,7 @@
                                 </x-slot>
 
                                 <x-slot name="button">
-                                    <x-modal-button alphName="modal1" cancel="Cancel" action="Add Student"/>
+                                    <x-modal-button loading="addStudent" alphName="modal1" cancel="Cancel" action="Add Student"/>
                                 </x-slot>
 
 
@@ -121,7 +121,14 @@
 
                     </div>
 
-
+                    <form action="{{route('logout')}}" method="post">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="bg-white shadow-md duration-300 dark:hover:bg-red-700 hover:bg-red-600 px-2 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-700 dark:hover:bg-gray-200 hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-200 md:mx-2">
+                            Logout
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

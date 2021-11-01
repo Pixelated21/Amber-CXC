@@ -24,11 +24,23 @@ Route::get('/Prox-UI', function () {
 })->name('PrøxïmïtyUI');
 
 
-Route::get('/login',[LoginController::class,'index'])->name('prox-login');
 
-Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
-Route::get('/student',[StudentController::class,'index'])->name('student');
-Route::get('/student-choice',[StudentController::class,'studentChoice'])->name('student-choice');
-Route::get('/subject',[SubjectController::class,'index'])->name('subject');
-Route::get('/payment',[PaymentController::class,'index'])->name('payment');
-Route::get('/teacher',[TeacherController::class,'index'])->name('teacher');
+Route::get('/login',[LoginController::class,'index'])->name('prox-login');
+Route::post('/logout',[LoginController::class,'logout'])->name('logout');
+
+Route::group(['middleware' => ['adminMiddleware','auth'],'prefix' => 'a'],function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/student', [StudentController::class, 'index'])->name('student');
+    Route::get('/student-choice', [StudentController::class, 'studentChoice'])->name('student-choice');
+    Route::get('/subject', [SubjectController::class, 'index'])->name('subject');
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment');
+    Route::get('/teacher',[TeacherController::class,'index'])->name('teacher');
+
+});
+
+Route::group(['middleware' => ['teacherMiddleware','auth'],'prefix' => 't'],function (){
+    Route::get('/students',[TeacherController::class,'students'])->name('teacher-student');
+    Route::get('/dashboard',[TeacherController::class,'dashboard'])->name('teacher-dashboard');
+
+});

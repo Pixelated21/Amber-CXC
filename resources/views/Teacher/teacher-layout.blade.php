@@ -15,5 +15,6 @@
 
 @livewire('teacher')
 
+@livewireScripts
 </body>
 </html>

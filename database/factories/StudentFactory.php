@@ -15,13 +15,13 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'first_nm' => $this->faker->firstName(),
-            'last_nm' => $this->faker->lastName(),
+            'first_nm' => $this->faker->firstName,
+            'last_nm' => $this->faker->lastName,
             'email_addr' => $this->faker->unique()->safeEmail(),
             'dob' => $this->faker->date,
             'class' => $this->faker->randomLetter,
             'gender' => 'Female',
-            'phone_nbr' => $this->faker->phoneNumber(),
+            'phone_nbr' => $this->faker->unique()->phoneNumber,
         ];
     }
 }

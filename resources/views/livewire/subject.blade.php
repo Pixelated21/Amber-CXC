@@ -7,7 +7,7 @@
             <div class="flex items-center justify-between">
                 <div class=" w-36">
                     <a class="text-2xl font-bold duration-300 text-gray-800 dark:text-white lg:text-2xl hover:text-gray-700 dark:hover:text-gray-300"
-                       href="#">Amber-CXC</a>
+                       href="{{route('dashboard')}}">Amber-CXC</a>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -88,7 +88,7 @@
                                 </x-slot>
 
                                 <x-slot name="button">
-                                    <x-modal-button alphName="modal2" cancel="Cancel" action="Add Student"/>
+                                    <x-modal-button loading="addSubject" alphName="modal2" cancel="Cancel" action="Add Subject"/>
                                 </x-slot>
 
 
@@ -97,12 +97,46 @@
 
 
                     </div>
-
+                    <form action="{{route('logout')}}" method="post">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="bg-white shadow-md duration-300 dark:hover:bg-red-700 hover:bg-red-600 px-2 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 transform rounded dark:text-gray-700 dark:hover:bg-gray-200 hover:bg-gray-900 dark:hover:text-gray-200 hover:text-gray-200 md:mx-2">
+                        Logout
+                        </button>
+                    </form>
 
                 </div>
             </div>
         </div>
     </nav>
+
+        <div x-data="{toast:false}"
+             @toast.window="toast = {{$toast}}"
+        >
+            <div x-show="toast"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-300"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 role="alert"
+                 class="bottom-5 right-5 z-50  fixed w-72 pl-2 flex justify-center items-center p-6 text-white rounded-lg bg-gradient-to-b from-green-600 to-green-700">
+                <button @click="toast = !toast" type="button" class="absolute top-3 right-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                </button>
+
+                <div class="max-w-xs">
+                    <p class="font-bold">Post has been published!</p>
+                </div>
+            </div>
+        </div>
+
 
 
     <div class="container mx-auto px-4 sm:px-8">
